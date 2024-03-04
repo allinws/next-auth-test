@@ -53,9 +53,9 @@ const handleJWTExpired = async (token) => {
 };
 
 export const authOptions = {
-//   pages: {
-//     signIn: "/auth/signin", // Custom sign-in page path
-//   },
+  // pages: {
+  //   signIn: "/auth/signin", // Custom sign-in page path
+  // },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -68,40 +68,23 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // make request to base_url/api/auth/login/ with email and password body
-        // const url = `${backendBaseUrl}/api/token/`;
-        // const response = await fetch(url, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify(credentials),
-        // });
 
-        // if (!response.ok) {
-        //   return null;
-        // }
-
-        // const responseData = await response.json();
-
+        // FAKED REQUEST TO BACKEND
         const responseData = {
-            access: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMDk2NzY4LCJpYXQiOjE3MDk1NjA3NjgsImp0aSI6ImJiYTM3NmM0MjRmYzRkYWJhMTlkNjI4MWQwNzc3ZTM3IiwidXNlcl9pZCI6MX0.-2jvR8bA5G5sqTa0Psd8Wbnhs-5MgNnYMIKh-oug_rk",
-            refresh: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MTA5Njc2OCwiaWF0IjoxNzA5NTYwNzY4LCJqdGkiOiJkZDAxODQ3OWExYmE0ZTJiYjg3NDU0ODczMDFlYjcyOSIsInVzZXJfaWQiOjF9.RFhudwWpNY88NNu-KFFiIRTD6Tm6oCKS3zBI5sqeqEI",
+          access: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMTAyODA5LCJpYXQiOjE3MDk1NjY4MDksImp0aSI6IjRiODQ3OWI4ODIxZDQ0MDJiODU2MTFkMmY4MTg3MDMxIiwidXNlcl9pZCI6MX0.9rT83wOijxtD_R-tlvcUn9Xx3z6a8eQu1blp6OLyR1I",
+          refresh: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MTEwMjgwOSwiaWF0IjoxNzA5NTY2ODA5LCJqdGkiOiIxZDgyYTEyYzA1NmE0YmNlYmU3MWFlNmFhMjliY2VhNCIsInVzZXJfaWQiOjF9.2PYY20ufXy5-ZJ75KdHFTDU9ICz6oaaVCpwcctEB4Yo"
         }
 
-        console.log('responseData', responseData)
 
         const {
           access: customAccessToken,
           refresh: customRefreshToken,
-        //   organisation: { name },
         } = responseData;
 
         if (customAccessToken) {
           const responseBody = {
             accessToken: customAccessToken,
             refreshToken: customRefreshToken,
-            // name: name,
           };
 
           return responseBody;
@@ -124,7 +107,7 @@ export const authOptions = {
           accessTokenExpires: Date.now() + user.expires_in * 1000, // Assuming you have `expires_in` value
         };
       }
-    
+
 
       // if (trigger === "update") {
       //   console.log('updating server session...')
