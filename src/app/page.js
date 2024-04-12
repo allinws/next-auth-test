@@ -11,6 +11,8 @@ export default async function Home() {
 
   const session = await getServerSession(authOptions);
 
+  console.log('session___', session)
+
   // shorten auth token to 10 characters
   const shortAccessToken = session?.accessToken ? `${session.accessToken.substring(0, 10)}...` : null;
   const shortRefreshToken = session?.refreshToken ? `${session.refreshToken.substring(0, 10)}...` : null;
