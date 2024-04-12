@@ -97,7 +97,6 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, account, trigger, session, profile, user }) {
       // Update server session with new data
-
       console.log("JWT callback triggered");
       console.log("Token", token);
       console.log("Account", account);
@@ -105,15 +104,25 @@ export const authOptions = {
       console.log("Session", session);
       console.log("Profile", profile);
       console.log("User", user);
+      console.log('\n\n-------\n\n')
 
-      if (account && user) {
+      if (user) {
         return {
           ...token,
           accessToken: user.accessToken,
-          refreshToken: token.refreshToken,
+          refreshToken: user.refreshToken,
           accessTokenExpires: Date.now() + user.expires_in * 1000, // Assuming you have `expires_in` value
         };
       }
+
+      // if (account && user) {
+      //   return {
+      //     ...token,
+      //     accessToken: user.accessToken,
+      //     refreshToken: token.refreshToken,
+      //     accessTokenExpires: Date.now() + user.expires_in * 1000, // Assuming you have `expires_in` value
+      //   };
+      // }
 
 
       // if (trigger === "update") {
@@ -121,16 +130,24 @@ export const authOptions = {
       //   return { ...token, ...session.organisation };
       // }
 
-      if (
-        typeof token.accessToken === "string" &&
-        isJwtExpired(token.accessToken)
-      ) {
-        token = await handleJWTExpired(token);
-      }
+      // if (
+      //   typeof token.accessToken === "string" &&
+      //   isJwtExpired(token.accessToken)
+      // ) {
+      //   token = await handleJWTExpired(token);
+      // }
 
       return token;
     },
     async session({ session, token: jwtToken, user, trigger }) {
+      console.log("Session callback triggered");
+      console.log("Session", session);
+      console.log("Token", jwtToken);
+      console.log("User", user);
+      console.log("Trigger", trigger);
+      console.log('\n\n-------\n\n')
+
+
       const token = jwtToken;
       session.accessToken = token.accessToken;
       // session.refreshToken = token.refreshToken;
@@ -138,9 +155,9 @@ export const authOptions = {
       //   session.organisation = { name: "" };
       // }
 
-      session.organisation = session.organisation || { name: "" };
+      // session.organisation = session.organisation || { name: "" };
 
-      session.organisation.name = token.name || null;
+      // session.organisation.name = token.name || null;
       // session.user.last_name = token.last_name || null;
       // session.user.location = token.location;
       // session.user.username = token.username;
