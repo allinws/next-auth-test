@@ -75,7 +75,6 @@ export const authOptions = {
           refresh: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc0MTEwMjgwOSwiaWF0IjoxNzA5NTY2ODA5LCJqdGkiOiIxZDgyYTEyYzA1NmE0YmNlYmU3MWFlNmFhMjliY2VhNCIsInVzZXJfaWQiOjF9.2PYY20ufXy5-ZJ75KdHFTDU9ICz6oaaVCpwcctEB4Yo"
         }
 
-
         const {
           access: customAccessToken,
           refresh: customRefreshToken,
@@ -99,11 +98,19 @@ export const authOptions = {
     async jwt({ token, account, trigger, session, profile, user }) {
       // Update server session with new data
 
+      console.log("JWT callback triggered");
+      console.log("Token", token);
+      console.log("Account", account);
+      console.log("Trigger", trigger);
+      console.log("Session", session);
+      console.log("Profile", profile);
+      console.log("User", user);
+
       if (account && user) {
         return {
           ...token,
           accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
+          refreshToken: token.refreshToken,
           accessTokenExpires: Date.now() + user.expires_in * 1000, // Assuming you have `expires_in` value
         };
       }
